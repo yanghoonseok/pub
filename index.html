@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%- VUE_APP_PROJECT_NAME%></title>
+    <script
+      src="http://maps.google.com/maps/api/js?key=AIzaSyDu3y1zF1GP1DxznKMQMQxOAh7PHixKtms&libraries=geometry&region=kr"
+    >
+      Date.prototype.toFormatString = function () {
+        return new Date(
+          new Date().setHours(
+            new Date().getHours() +
+              Math.abs(new Date().getTimezoneOffset()) / 60
+          )
+        ).toISOString();
+      };
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const getStack = function () {
+        const customEvent = new CustomEvent("getStack", null);
+        window.dispatchEvent(customEvent);
+      };
+    </script>
+    <%- entryTarget%>
+  </body>
+</html>

@@ -1,0 +1,179 @@
+@use "sass:color";
+@use "sass:map";
+@use "functions";
+
+// Flex
+@mixin flex($justify: center, $align: center, $direction: row) {
+	display: flex;
+	justify-content: $justify;
+	align-items: $align;
+	flex-direction: $direction;
+}
+
+// Inline-flex
+@mixin inline-flex($justify: center, $align: center) {
+	display: inline-flex;
+	justify-content: $justify;
+	align-items: $align;
+}
+
+// 그리드
+@mixin grid($column: 2, $min: 0, $max: 1fr) {
+	display: grid;
+
+	@if $column ==auto {
+		grid-auto-flow: column;
+		grid-auto-columns: minmax($min, $max);
+	}
+
+	@else {
+		grid-template-columns: repeat($column, minmax($min, $max));
+	}
+}
+
+// 박스 가운데 정렬
+@mixin box-center($w: null, $h: null) {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: $w;
+	height: $h;
+}
+
+// 박스 꽉 채워서 정렬
+@mixin box-full {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+// 폰트어썸
+@mixin fa($weight: bold) {
+	font-family: "Font Awesome 6 Pro";
+	font-weight: $weight;
+}
+
+// hex -> filter 값으로 변환 (예: @include change-color(#fff))
+@mixin change-color($color) {
+	$r: calc(color.channel($color, "red") / 255);
+	$g: calc(color.channel($color, "green") / 255);
+	$b: calc(color.channel($color, "blue") / 255);
+
+	$svg-filter-id: "recolor";
+	filter: url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg">\
+      <filter id="#{$svg-filter-id}" color-interpolation-filters="sRGB">\
+        <feColorMatrix type="matrix" values="\
+          0 0 0 0 #{$r}\
+          0 0 0 0 #{$g}\
+          0 0 0 0 #{$b}\
+          0 0 0 1 0\
+        "/>\
+      </filter>\
+    </svg>\
+    ##{$svg-filter-id}');
+}
+
+// IR기법
+@mixin hide {
+	display: block;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: -9999em;
+}
+
+// 한줄 자르기
+@mixin text-overflow {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+// 여러줄 자르기 (기본: 2줄)
+@mixin line-clamp($line: 2) {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $line;
+	overflow: hidden;
+}
+
+// 썸네일
+@mixin thumbnail {
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-position: center;
+	}
+}
+
+// 썸네일 가운데 정렬 및 자르기
+@mixin center-crop-thumbnail {
+	@include thumbnail;
+
+	img {
+		object-fit: cover;
+	}
+}
+
+// 썸네일 가운데 정렬
+@mixin center-thumbnail {
+	@include thumbnail;
+
+	img {
+		object-fit: contain;
+	}
+}
+
+// 아이콘
+@mixin icon($display: inline-block, $size: contain, $align: middle) {
+	display: $display;
+	background-repeat: no-repeat;
+	background-size: $size;
+	background-position: 50% 50%;
+
+	@if $display ==inline-block {
+		vertical-align: $align;
+	}
+}
+
+// clearfix
+@mixin clearfix {
+	&::after {
+		content: "";
+		display: block;
+		clear: both;
+	}
+}
+
+// 미디어 쿼리
+$breakpoints: (
+	"tablet": functions.em(768),
+	"pc": functions.em(1024),
+	// 1024px / 16
+);
+
+@mixin mq($size, $width: null) {
+	$bp-map: map.get($breakpoints, $size);
+
+	@if $bp-map {
+		@media (min-width: $bp-map) {
+			@content;
+		}
+	}
+
+	@else if $size ==custom {
+		@media (min-width: $width) {
+			@content;
+		}
+	}
+
+	@else {
+		@error "#{$size}는 정의되지 않았습니다. tablet, pc, custom 중 하나를 넣어주세요.";
+	}
+}

@@ -1,0 +1,17 @@
+.all-menu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 10000;
+	background: #fff;
+
+	.btn-close {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+		font-size: 1.8rem;
+		line-height: 1;
+	}
+}

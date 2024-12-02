@@ -1,0 +1,68 @@
+/*!
+ * Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license (Commercial License)
+ * Copyright 2023 Fonticons, Inc.
+ */
+@import "functions";
+@import "variables";
+@use "../common/variables" as v;
+
+:root,
+:host {
+  --#{variables.$fa-css-prefix}-style-family-duotone: "Font Awesome 6 Duotone";
+  --#{variables.$fa-css-prefix}-font-duotone: normal 900 1em/1 "Font Awesome 6 Duotone";
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Duotone";
+  font-style: normal;
+  font-weight: 900;
+  font-display: $fa-font-display;
+  src: url("#{v.$fa-font-path}/fa-duotone-900.woff2") format("woff2");
+}
+
+.fad,
+.#{variables.$fa-css-prefix}-duotone {
+  position: relative;
+  font-weight: 900;
+  letter-spacing: normal;
+}
+
+.fad::before,
+.#{variables.$fa-css-prefix}-duotone::before {
+  position: absolute;
+  color: var(--#{variables.$fa-css-prefix}-primary-color, inherit);
+  opacity: var(--#{variables.$fa-css-prefix}-primary-opacity, #{variables.$fa-primary-opacity});
+}
+
+.fad::after,
+.#{variables.$fa-css-prefix}-duotone::after {
+  color: var(--#{variables.$fa-css-prefix}-secondary-color, inherit);
+  opacity: var(--#{variables.$fa-css-prefix}-secondary-opacity, #{variables.$fa-secondary-opacity});
+}
+
+.#{variables.$fa-css-prefix}-swap-opacity .fad::before,
+.#{variables.$fa-css-prefix}-swap-opacity .fa-duotone::before,
+.fad.#{variables.$fa-css-prefix}-swap-opacity::before,
+.fa-duotone.#{variables.$fa-css-prefix}-swap-opacity::before {
+  opacity: var(--#{variables.$fa-css-prefix}-secondary-opacity, #{variables.$fa-secondary-opacity});
+}
+
+.#{variables.$fa-css-prefix}-swap-opacity .fad::after,
+.#{variables.$fa-css-prefix}-swap-opacity .fa-duotone::after,
+.fad.#{variables.$fa-css-prefix}-swap-opacity::after,
+.fa-duotone.#{variables.$fa-css-prefix}-swap-opacity::after {
+  opacity: var(--#{variables.$fa-css-prefix}-primary-opacity, #{variables.$fa-primary-opacity});
+}
+
+.fad.#{variables.$fa-css-prefix}-inverse,
+.#{variables.$fa-css-prefix}-duotone.#{variables.$fa-css-prefix}-inverse {
+  color: var(--#{variables.$fa-css-prefix}-inverse, variables.$fa-inverse);
+}
+
+.fad.#{variables.$fa-css-prefix}-stack-1x,
+.fad.#{variables.$fa-css-prefix}-stack-2x,
+.#{variables.$fa-css-prefix}-duotone.#{variables.$fa-css-prefix}-stack-1x,
+.#{variables.$fa-css-prefix}-duotone.#{variables.$fa-css-prefix}-stack-2x {
+  position: absolute;
+}

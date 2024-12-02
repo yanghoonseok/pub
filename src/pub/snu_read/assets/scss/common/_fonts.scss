@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+/*********** font-family: 'IBM Plex Sans KR'************/
+@font-face {
+	font-family: "IBM Plex Sans KR";
+	font-style: normal;
+	font-weight: 300;
+	src: url("~fonts/IBMPlexSansKR-Light.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "IBM Plex Sans KR";
+	font-style: normal;
+	font-weight: 400;
+	src: url("~fonts/IBMPlexSansKR-Regular.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "IBM Plex Sans KR";
+	font-style: normal;
+	font-weight: 500;
+	src: url("~fonts/IBMPlexSansKR-Medium.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "IBM Plex Sans KR";
+	font-style: normal;
+	font-weight: 600;
+	src: url("~fonts/IBMPlexSansKR-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "IBM Plex Sans KR";
+	font-style: normal;
+	font-weight: 700;
+	src: url("~fonts/IBMPlexSansKR-Bold.woff2") format("woff2");
+}
+
+/*********** 해피니스산스 font-family: 'HappinessSans'************/
+@font-face {
+	font-family: "HappinessSans";
+	font-style: normal;
+	font-weight: 100 900;
+	src: url("~fonts/HappinessSansVF.woff2") format("woff2");
+}

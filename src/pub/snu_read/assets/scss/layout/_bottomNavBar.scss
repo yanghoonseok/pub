@@ -1,0 +1,22 @@
+@use "../common/mixins";
+
+.navigation-bar {
+	@include mixins.flex(normal, normal);
+
+	position: sticky;
+	bottom: 0;
+	height: 5rem;
+	border-top: 0.1rem solid #ccc;
+	background: #fff;
+
+	a {
+		@include mixins.flex;
+
+		flex: 1 1 100%;
+		height: 100%;
+
+		+ a {
+			border-left: 0.1rem solid #ccc;
+		}
+	}
+}

@@ -1,0 +1,122 @@
+@use "../common/mixins" as m;
+
+.contents-head {
+	@include m.flex(space-between);
+
+	flex: 0 0 auto;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background: #fff;
+	height: var(--contents-head-height);
+	padding: 0 var(--container-padding);
+	border-bottom: 0.1rem solid #ebebeb;
+
+	.logo,
+	.btn-menu {
+		font-size: 1.8rem;
+	}
+}
+
+/* 문제 풀이 헤더 */
+.progress-head {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background: #fff;
+	font-family: var(--secondary-text-family);
+
+	&.fixed-header {
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: 5;
+		height: var(--progress-head-height);
+	}
+
+	.head-container {
+		@include m.flex(normal);
+
+		height: 4.9rem;
+		padding: 0 var(--container-padding);
+	}
+
+	.btn-prev {
+		@include m.icon;
+
+		width: 2rem;
+		height: 1.8rem;
+		margin-top: 0.4rem;
+		background-image: url(~images/icon_prev_green.svg);
+	}
+
+	.head-option {
+		@include m.flex(normal);
+
+		margin-left: auto;
+		text-align: right;
+	}
+
+	.head-title {
+		color: #7D7D7D;
+		font-size: 1.3rem;
+		line-height: 1.4;
+		letter-spacing: -0.0195rem;
+	}
+
+	.head-progress {
+		@include m.flex(flex-end);
+
+		padding: 0.4rem 0;
+	}
+
+	.progress-fraction {
+		font-size: 1.1rem;
+		margin-right: 0.6rem;
+		color: #7d7d7d;
+		line-height: 1
+	}
+
+	.btn-head {
+		@include m.inline-flex;
+
+		height: 2.6rem;
+		margin-left: 1rem;
+		padding-left: 1.2rem;
+		padding-right: 0.8rem;
+		background: var(--green-01);
+		border-radius: 4.2rem;
+
+		span {
+			color: #fff;
+			font-size: 0.9rem;
+			font-weight: 900;
+			letter-spacing: -0.009rem;
+			line-height: 1
+		}
+
+		i {
+			@include m.flex;
+
+			flex: 0 0 auto;
+			width: 1.4rem;
+			height: 1.4rem;
+			margin-left: 0.6rem;
+			background: #fff;
+			border-radius: 50%;
+			color: var(--green-01);
+			font-size: 0.8rem;
+		}
+	}
+
+	.progress-bar {
+		height: 0.3rem;
+		background: #E0E2EA;
+
+		div {
+			height: 100%;
+			border-radius: inherit;
+			background: linear-gradient(270deg, #77D9CA 1.01%, #48BE87 45.41%, #128D77 86.65%);
+		}
+	}
+}

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=1000, initial-scale=1" />
+    <title>퍼블리싱 페이지 목록 - 서울대 읽기 앱</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/vuetify@3.5.2/dist/vuetify.min.css"
+    />
+    <style>
+      @font-face {
+        font-family: "Pretendard-Regular";
+        src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+          format("woff");
+        font-weight: 400;
+        font-style: normal;
+      }
+      html,
+      table {
+        font-family: "Pretendard-Regular", "맑은 고딕", "Malgun Gothic",
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.42857;
+      }
+      body {
+        background: rgb(var(--v-theme-background));
+      }
+      #app {
+        opacity: 0;
+        padding: 20px;
+      }
+      #app[data-v-app] {
+        opacity: 1;
+      }
+      .v-container {
+        padding: 0;
+      }
+      .v-card {
+        box-shadow: 0 4px 10px rgba(46, 38, 61, 0.12), 0 0 transparent,
+          0 0 transparent !important;
+      }
+      .v-card-item {
+        padding: 20px 25px !important;
+      }
+      .v-table th {
+        background: rgb(246, 247, 251) !important;
+        /* border-bottom: 0 !important; */
+      }
+      .v-table th,
+      .v-table td {
+        padding: 8px 25px !important;
+      }
+      .v-table tbody tr:hover {
+        background: rgb(246, 247, 251);
+      }
+      .v-table button {
+        text-decoration: none;
+      }
+      .v-table button:hover {
+        text-decoration: underline;
+      }
+      .v-chip {
+        font-weight: 500;
+      }
+      .del,
+      .del button {
+        text-decoration: line-through;
+      }
+      .del button {
+        pointer-events: none;
+      }
+
+      .guide {
+        background: #fffbe0;
+      }
+      .admin {
+        background: #ecf3ff;
+      }
+
+      .v-card ~ .v-card {
+        margin-top: 30px;
+      }
+      .v-layout {
+        padding-top: 60px;
+      }
+      .v-layout .v-field {
+        border-radius: 100px;
+        font-size: 14px;
+        font-weight: 600;
+        background: rgb(245, 245, 245);
+        box-shadow: none;
+      }
+      .v-layout .v-field .v-icon {
+        font-size: 18px;
+      }
+      .v-layout .v-field__input {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .v-input__details {
+        display: none;
+      }
+      .v-system-bar {
+        padding: 0 15px !important;
+      }
+      .v-system-bar .v-btn:first-child {
+        margin-right: 10px;
+      }
+      .v-system-bar .v-btn:last-child {
+        margin-left: 10px;
+      }
+      .v-field__append-inner .v-icon {
+        margin-left: 7px;
+      }
+      .mdi-open-in-new {
+        font-size: 22px;
+      }
+
+      .title {
+        font-size: 26px;
+        margin-bottom: 10px;
+      }
+      .title span {
+        font-weight: 600;
+      }
+      .title small {
+        font-size: 65% !important;
+      }
+
+      .header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .total {
+        font-weight: bold;
+      }
+
+      .viewport {
+        position: relative;
+      }
+
+      .frame {
+        position: relative;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        vertical-align: top;
+      }
+
+      .menu {
+      }
+      .menu .v-list-item--density-default.v-list-item--one-line {
+        min-height: 42px;
+      }
+      .menu .v-list-item-title {
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .menu .v-icon {
+        font-size: 14px;
+      }
+      .menu .mdi-camera {
+        margin-left: 4px;
+      }
+      .v-field__append-inner .v-icon:hover,
+      .menu .v-list-item-title:hover {
+        color: rgba(var(--v-theme-primary));
+      }
+
+      .divider {
+        --size: 4px;
+
+        opacity: 0.1;
+        margin: 12px 0;
+        background: #000;
+        transition: all 300ms ease 0s;
+      }
+      .divider:hover {
+        opacity: 0.3;
+      }
+      .divider-width {
+        width: var(--size);
+        margin-bottom: 40px;
+        cursor: col-resize;
+      }
+      .divider-height {
+        height: var(--size);
+        cursor: row-resize;
+      }
+      .right-column {
+        flex-shrink: 0;
+        flex-grow: 0;
+        /* min-width: 280px; */
+        /* max-width: 1024px; */
+      }
+      .right-column > .v-card {
+        position: sticky;
+        top: 20px;
+      }
+      .device-size .v-field__input,
+      .v-overlay-container .v-list-item-title {
+        font-size: 14px;
+      }
+      .device-size .v-field__input {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .device-size .mdi-cellphone {
+        font-size: 18px;
+      }
+      .size-input input {
+        text-align: center;
+      }
+      .mobile .right-column {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <v-container fluid>
+        <v-row>
+          <v-col>
+            <v-card v-for="project in projectList">
+              <v-card-item>
+                <v-card-title class="title"
+                  ><span>{{ project.project.name }}</span>
+                  <small>퍼블리싱 목록</small></v-card-title
+                >
+                <div class="header">
+                  <div class="author">
+                    <span>담당자:</span>
+                    <span>{{ project.author.name }}</span>
+                    (<a
+                      :href="`mailto:${project.author.email}`"
+                      class="text-blue"
+                      >{{ project.author.email }}</a
+                    >)
+                  </div>
+                  <div class="total">
+                    {{ getCurrentCount(project.items) }} / {{
+                    getTotalCount(project.items) }} (진행율: {{
+                    Math.round(getCurrentCount(project.items) /
+                    getTotalCount(project.items) * 100) }}%)
+                  </div>
+                </div>
+              </v-card-item>
+              <!-- <v-card-item style="background: rgb(250 246 251)">
+								<v-row>
+									<v-col>
+										<p style="font-size: 14px; margin: 5px">
+											📌 관리자 CSS는 CMS3 퍼블리싱이 가장 최신 버전입니다. 단, 메인 대시보드는 CSS가 HTML안에 포함되어 있습니다. 대시보드에만 적용될 수 있도록 해주세요.
+										</p>
+										<p style="font-size: 14px; margin: 5px">📌 메인 배너 이미지 권장 사이즈: 1200 x 488</p>
+									</v-col>
+								</v-row>
+							</v-card-item> -->
+              <v-divider></v-divider>
+              <v-card-item>
+                <v-data-table
+                  :headers="project.headers"
+                  :items="project.items"
+                  items-per-page="-1"
+                >
+                  <template v-slot:headers="{ columns }">
+                    <tr>
+                      <template v-for="column in columns" :key="column.key">
+                        <th :id="column.value" :style="{width: column.width}">
+                          {{ column.title }}
+                        </th>
+                      </template>
+                    </tr>
+                  </template>
+                  <template v-slot:item="{ item, index }">
+                    <tr
+                      :class="{ del : item.status==='del', guide: item.depth1.includes('가이드'), admin: item.depth1.includes('관리자')}"
+                    >
+                      <td>{{ index + 1 }}</td>
+                      <td style="min-width: 110px">{{ item.code }}</td>
+                      <td v-html="item.depth1"></td>
+                      <td v-html="item.depth2"></td>
+                      <td v-html="item.depth3"></td>
+                      <td>
+                        <button
+                          type="button"
+                          class="text-primary w-100 text-left"
+                          @click="changeUrl(item.path)"
+                        >
+                          {{ item.path }}
+                        </button>
+                      </td>
+                      <td>
+                        <v-chip
+                          label
+                          :color="getColor(item.status)"
+                          v-if="item.status"
+                        >
+                          {{ getText(item.status) }}
+                        </v-chip>
+                      </td>
+                      <td v-html="item.note"></td>
+                    </tr>
+                  </template>
+
+                  <template #bottom></template>
+                </v-data-table>
+              </v-card-item>
+            </v-card>
+          </v-col>
+          <v-col class="right-column">
+            <v-card class="viewport">
+              <v-layout>
+                <v-system-bar window absolute height="60" color="white">
+                  <v-btn
+                    icon="mdi-refresh"
+                    variant="text"
+                    density="compact"
+                    @click="reloadFrame"
+                    title="새로고침"
+                  ></v-btn>
+
+                  <!-- prepend-inner-icon="mdi-web" -->
+                  <v-text-field
+                    density="compact"
+                    variant="solo"
+                    hide-details
+                    v-model="url"
+                    :title="url"
+                    readonly
+                  >
+                    <template v-slot:append-inner>
+                      <v-icon @click="copyUrl" title="주소 복사"
+                        >mdi-content-copy</v-icon
+                      >
+                      <v-icon @click="openNewWindow" title="새 창으로 열기"
+                        >mdi-open-in-new</v-icon
+                      >
+                    </template>
+                  </v-text-field>
+
+                  <!-- <v-btn icon="mdi-open-in-new" variant="text" density="compact" @click="openNewWindow" title="새 창으로 열기"></v-btn> -->
+
+                  <!-- <v-menu location="bottom">
+										<template v-slot:activator="{ props }">
+											<v-btn v-bind="props" icon="mdi-dots-vertical" variant="text" density="compact"></v-btn>
+										</template>
+
+										<v-list class="menu">
+											<v-list-item>
+												<v-list-item-title @click="openNewWindow">
+													새 창에서 열기
+													<v-icon icon="mdi-open-in-new"></v-icon>
+												</v-list-item-title>
+											</v-list-item>
+										</v-list>
+									</v-menu> -->
+                </v-system-bar>
+              </v-layout>
+              <v-divider></v-divider>
+              <v-row no-gutters align="center" class="device-size">
+                <v-col cols="7">
+                  <v-select
+                    density="compact"
+                    variant="solo"
+                    rounded="false"
+                    flat
+                    hide-details
+                    :items="screenList"
+                    prepend-inner-icon="mdi-cellphone"
+                    @update:model-value="setSize"
+                    v-model="screenSize.value"
+                    :menu-props="{maxHeight: 'unset'}"
+                  >
+                  </v-select>
+                </v-col>
+                <v-divider vertical></v-divider>
+                <v-col>
+                  <v-text-field
+                    density="compact"
+                    variant="solo"
+                    flat
+                    v-model="widthModel"
+                    @keyup.enter="changeSize"
+                    class="size-input"
+                    :disabled="isDisabled"
+                  ></v-text-field>
+                </v-col>
+                <v-col class="text-center" style="flex: 0 0 20px">x</v-col>
+                <v-col>
+                  <v-text-field
+                    density="compact"
+                    variant="solo"
+                    flat
+                    v-model="heightModel"
+                    @keyup.enter="changeSize"
+                    class="size-input"
+                    :disabled="isDisabled"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-divider></v-divider>
+              <div
+                class="frame"
+                :style="{ width: frameWidth + 'px', height: frameHeight + 'px' }"
+              >
+                <iframe
+                  :src="frameUrl"
+                  frameborder="0"
+                  id="iframe"
+                  ref="iframeEl"
+                ></iframe>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+        <div id="output"></div>
+      </v-container>
+    </div>
+
+    <script src="//unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/vuetify@3.5.2/dist/vuetify.min.js"></script>
+
+    <script>
+      const { createApp, ref, reactive, computed, onMounted, nextTick } = Vue;
+      const { createVuetify } = Vuetify;
+
+      const vuetify = createVuetify({
+        theme: {
+          defaultTheme: "light",
+          themes: {
+            light: {
+              dark: false,
+              colors: {
+                primary: "rgb(140, 87, 255)",
+                secondary: "rgb(24,103,192)",
+                background: "rgb(244, 245, 250)",
+              },
+              variables: {
+                "border-opacity": "0.07",
+              },
+            },
+          },
+        },
+      });
+
+      const app = createApp({
+        setup() {
+          const STATUS = {
+            ing: { text: "진행중", color: "primary" },
+            chk: { text: "검수중", color: "secondary" },
+            end: { text: "완료", color: "green" },
+            del: { text: "삭제", color: "" },
+          };
+          const HEADERS = [
+            { title: "NUM", sortable: true, value: "num", width: "5%" },
+            { title: "화면코드", sortable: true, value: "code", width: "8%" },
+            { title: "1Depth", sortable: true, value: "depth1", width: "12%" },
+            { title: "2Depth", sortable: true, value: "depth2", width: "13%" },
+            { title: "3Depth", sortable: true, value: "depth3", width: "12%" },
+            { title: "경로", sortable: true, value: "path", width: "auto" },
+            { title: "현황", sortable: true, value: "status", width: "10%" },
+            { title: "비고", sortable: true, value: "note", width: "20%" },
+          ];
+          const projectList = reactive([
+            /*******************************************************************************************/
+            /*
+							- 별표로 감싸놓은 이곳만 수정하면 목록이 생성됩니다.
+							- items 하위의 code, depth1, depth2 등 모든 속성은 생략 가능합니다.
+							- status(현황): ing(진행중), chk(검수중), end(완료), del(삭제)
+							- 프로젝트 목록이 한 페이지에 여러 개일 경우 아래 묶음을 하나 더 만들면 됩니다.
+						*/
+            {
+              project: {
+                name: "서울대 읽기 앱",
+                // 해당 프로젝트의 퍼블리싱 파일을 업로드한 시안사이트 경로
+                sianUrl: "http://sian.onion.co.kr/2024/snu/pub",
+              },
+              author: {
+                name: "강수민",
+                email: "ksm@onion.co.kr",
+                // name: "양훈석",
+                // email: "yhs@onion.co.kr",
+              },
+              headers: HEADERS,
+              items: [
+                {
+                  code: "A",
+                  depth1: "스플래시",
+                  path: "./#/",
+                  status: "",
+                  note: "권한 안내 팝업 포함",
+                },
+                {
+                  code: "C",
+                  depth1: "로그인",
+                  path: "./#/login.html",
+                  status: "",
+                },
+                {
+                  code: "C1",
+                  depth1: "회원가입",
+                  path: "./#/signup.html",
+                  status: "",
+                },
+                {
+                  code: "C2",
+                  depth1: "아이디 찾기",
+                  path: "./#/findId.html",
+                  status: "",
+                },
+                {
+                  code: "C2-1",
+                  depth1: "아이디 찾기",
+                  depth2: "아이디 안내",
+                  path: "./#/showId.html",
+                  status: "",
+                },
+                {
+                  code: "C3",
+                  depth1: "비밀번호 찾기",
+                  path: "./#/findPw.html",
+                  status: "",
+                },
+                {
+                  code: "C3-1",
+                  depth1: "비밀번호 찾기",
+                  depth2: "비밀번호 변경",
+                  path: "./#/changePassword.html",
+                  status: "",
+                },
+                {
+                  code: "D",
+                  depth1: "수준선택",
+                  path: "./#/levelSelect.html",
+                  status: "",
+                },
+                {
+                  code: "M1",
+                  depth1: "문제풀이",
+                  depth2: "문제:수준선택",
+                  path: "./#/reading.html",
+                  status: "",
+                },
+                {
+                  code: "M1-1",
+                  depth1: "문제풀이",
+                  path: "./#/readingStudy.html",
+                  status: "",
+                  note: "M1-2 학습권유 바텀시트, 단어번역 모달",
+                },
+                {
+                  code: "M1-1-1",
+                  depth1: "문제풀이",
+                  depth2: "완료",
+                  path: "./#/readingComplete.html",
+                  status: "",
+                },
+                {
+                  code: "M1-1-2",
+                  depth1: "문제풀이",
+                  depth2: "레벨업",
+                  path: "./#/levelUp.html",
+                  status: "",
+                },
+                {
+                  code: "M2",
+                  depth1: "이야기",
+                  depth2: "목록",
+                  path: "./#/storyList.html",
+                  status: "",
+                },
+                {
+                  code: "M2-1",
+                  depth1: "이야기",
+                  depth2: "상세보기",
+                  path: "./#/storyDetail.html",
+                  status: "",
+                },
+                {
+                  code: "M3",
+                  depth1: "학습 목록",
+                  path: "./#/studyList.html",
+                  status: "",
+                },
+                {
+                  code: "M4",
+                  depth1: "마이페이지",
+                  path: "./#/myPage.html",
+                  status: "",
+                },
+                {
+                  code: "M4-1",
+                  depth1: "마이페이지",
+                  depth2: "학습기록 자세히보기",
+                  path: "./#/studyHistory.html",
+                  status: "",
+                },
+                {
+                  code: "M4-2",
+                  depth1: "마이페이지",
+                  depth2: "나의정보",
+                  path: "./#/myInfo.html",
+                  status: "",
+                },
+                {
+                  code: "M4-2-1",
+                  depth1: "마이페이지",
+                  depth2: "나의정보",
+                  depth3: "비밀번호 변경",
+                  path: "./#/updatePassword.html",
+                  status: "",
+                },
+                {
+                  code: "M4-3",
+                  depth1: "마이페이지",
+                  depth2: "레벨",
+                  path: "./#/rewardGuide.html",
+                  status: "",
+                },
+                {
+                  code: "M4-4",
+                  depth1: "마이페이지",
+                  depth2: "검색",
+                  path: "./#/search.html",
+                  status: "",
+                },
+                {
+                  code: "M4-5",
+                  depth1: "마이페이지",
+                  depth2: "설정",
+                  path: "./#/setting.html",
+                  status: "",
+                },
+                {
+                  code: "M4-5-1",
+                  depth1: "마이페이지",
+                  depth2: "설정",
+                  depth3: "알람",
+                  path: "./#/alarm.html",
+                  status: "",
+                },
+                {
+                  code: "M4-5-2",
+                  depth1: "마이페이지",
+                  depth2: "설정",
+                  depth3: "앱소개",
+                  path: "./#/introduction.html",
+                  status: "",
+                },
+                {
+                  code: "M4-5-3",
+                  depth1: "마이페이지",
+                  depth2: "설정",
+                  depth3: "이용약관",
+                  path: "./#/terms.html",
+                  status: "",
+                },
+                {
+                  code: "M4-5-3",
+                  depth1: "마이페이지",
+                  depth2: "설정",
+                  depth3: "개인정보처리방침",
+                  path: "./#/privacy.html",
+                  status: "",
+                },
+              ],
+            },
+            /*******************************************************************************************/
+          ]);
+
+          const screenSize = reactive({
+            title: "Galaxy S24",
+            value: {
+              width: 360,
+              height: 780,
+            },
+          });
+          const frameWidth = ref(screenSize.value.width);
+          const frameHeight = ref(screenSize.value.height);
+          const widthModel = ref(frameWidth.value);
+          const heightModel = ref(frameHeight.value);
+          const screenList = reactive([
+            {
+              title: "Galaxy S24",
+              value: {
+                width: 360,
+                height: 780,
+              },
+            },
+            {
+              title: "Galaxy S24+",
+              value: {
+                width: 384,
+                height: 854,
+              },
+            },
+            {
+              title: "Galaxy S24 Ultra",
+              value: {
+                width: 412,
+                height: 915,
+              },
+            },
+            {
+              title: "iPhone 13/14",
+              value: {
+                width: 390,
+                height: 844,
+              },
+            },
+            {
+              title: "iPhone 14/15 Pro",
+              value: {
+                width: 393,
+                height: 852,
+              },
+            },
+            {
+              title: "iPhone 14/15 Pro Max",
+              value: {
+                width: 430,
+                height: 932,
+              },
+            },
+            {
+              title: "iPad Mini",
+              value: {
+                width: 768,
+                height: 1024,
+              },
+            },
+            {
+              title: "iPad Pro",
+              value: {
+                width: 1024,
+                height: 1366,
+              },
+            },
+            {
+              title: "직접 입력",
+            },
+          ]);
+          const isDisabled = ref(true);
+          const iframeEl = ref(null);
+          const path = ref("/");
+          const url = computed(
+            () => `${projectList[0].project.sianUrl}/#${path.value}`
+          );
+          const frameUrl = ref(url.value);
+
+          const changeUrl = (targetUrl) => {
+            path.value = targetUrl;
+
+            if (document.documentElement.classList.contains("mobile")) {
+              window.open(url.value, "_blank");
+            } else {
+              frameUrl.value = url.value;
+            }
+          };
+
+          const reloadFrame = () => {
+            iframeEl.value.contentWindow.location.reload();
+          };
+          const copyUrl = () => {
+            window.navigator.clipboard.writeText(url.value);
+            alert("주소가 복사되었습니다~!");
+          };
+          const openNewWindow = () => {
+            window.open(url.value, "_blank");
+          };
+
+          const getCurrentCount = (items) => {
+            return items.filter((v) => v.status === "end").length;
+          };
+          const getTotalCount = (items) => {
+            return items.filter((v) => v.status !== "del").length;
+          };
+
+          const getColor = (value) => {
+            return STATUS[value]?.color;
+          };
+          const getText = (value) => {
+            return STATUS[value]?.text;
+          };
+
+          const setSize = (event) => {
+            if (event === "직접 입력") {
+              isDisabled.value = false;
+            } else {
+              isDisabled.value = true;
+
+              frameWidth.value = event.width;
+              frameHeight.value = event.height;
+
+              widthModel.value = event.width;
+              heightModel.value = event.height;
+            }
+          };
+
+          const changeSize = () => {
+            frameWidth.value = widthModel.value;
+            frameHeight.value = heightModel.value;
+          };
+
+          window.addEventListener("message", function (e) {
+            if (e.data.sian) {
+              path.value = e.data.sian.url;
+            }
+          });
+
+          return {
+            path,
+            url,
+            frameUrl,
+            frameWidth,
+            frameHeight,
+            iframeEl,
+            projectList,
+            screenList,
+            screenSize,
+            widthModel,
+            heightModel,
+            isDisabled,
+            changeUrl,
+            reloadFrame,
+            copyUrl,
+            openNewWindow,
+            getCurrentCount,
+            getTotalCount,
+            getColor,
+            getText,
+            setSize,
+            changeSize,
+          };
+        },
+      })
+        .use(vuetify)
+        .mount("#app");
+
+      // 디바이스 체크
+      if (
+        navigator.userAgent.indexOf("iPhone") > -1 ||
+        navigator.userAgent.indexOf("Android") > -1
+      ) {
+        console.log("mobile버젼");
+        document.documentElement.classList.add("mobile");
+      } else {
+        console.log("pc버젼");
+        document.documentElement.classList.add("pc");
+      }
+    </script>
+  </body>
+</html>

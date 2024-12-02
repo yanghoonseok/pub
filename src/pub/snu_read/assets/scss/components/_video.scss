@@ -1,0 +1,36 @@
+// ck에디터에서 등록한 동영상 > Remove Video 버튼
+.remove-videodetector {
+	display: none;
+}
+
+.videodetector {
+	.videodetector {
+		position: static;
+		padding-bottom: 0;
+		margin: 0;
+	}
+
+	iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+@supports not (selector(:has(*))) {
+	.videodetector {
+		position: relative;
+		padding-bottom: 56.25%;
+		margin: 1rem 0;
+	}
+}
+
+@supports selector(:has(*)) {
+	.videodetector:has(iframe) {
+		position: relative;
+		padding-bottom: 56.25%;
+		margin: 1rem 0;
+	}
+}

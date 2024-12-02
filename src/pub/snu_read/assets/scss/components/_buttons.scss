@@ -1,0 +1,66 @@
+.btn {
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-shadow: none !important;
+  height: 4.6rem;
+  line-height: 4.6rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 0 1.5rem;
+  background: var(--btn-primary-color);
+  border-radius: var(--form-border-radius);
+  letter-spacing: -0.02em;
+
+  &.loading {
+    opacity: 0.75;
+    position: relative;
+    font-size: 0;
+    pointer-events: none;
+  }
+
+  &.loading i {
+    display: none;
+  }
+
+  &.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -1rem 0 0 -1rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 0.2rem solid transparent;
+    border-left-color: #fff;
+    border-top-color: #fff;
+    border-right-color: #fff;
+    animation: spin 1s infinite ease-in-out;
+    vertical-align: top;
+  }
+
+  &[disabled] {
+    opacity: 0.6;
+  }
+}
+
+.btn-group {
+  margin-top: 2rem;
+  text-align: center;
+
+  &.group-right {
+    text-align: right;
+
+    .btn + .btn {
+      margin-left: 0.7rem;
+    }
+  }
+}
+
+.btn-wrap {
+  text-align: center;
+}

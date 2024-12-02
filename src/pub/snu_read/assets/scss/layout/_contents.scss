@@ -1,0 +1,56 @@
+@use "../common/mixins";
+
+.container {
+	padding-left: var(--container-padding);
+	padding-right: var(--container-padding);
+
+	&.container-padding {
+		padding-top: var(--container-padding);
+		padding-bottom: var(--container-padding);
+	}
+
+	.contents-body>& {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+}
+
+.contents-body {
+	@include mixins.flex(normal, normal, column);
+
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.contents-bottom {
+	flex: 0 0 auto;
+	text-align: center;
+
+	&.sticky {
+		position: sticky;
+		bottom: 0;
+		z-index: 10;
+	}
+
+	.bottom-container {
+		padding: 0 var(--container-padding) var(--container-padding);
+		text-align: center;
+
+		.btn+.btn {
+			margin-top: 1rem;
+		}
+
+		&.btn-2 {
+			@include mixins.flex;
+
+			.btn {
+				flex: 1 1 100%;
+
+				+.btn {
+					margin-top: 0;
+					margin-left: 1rem;
+				}
+			}
+		}
+	}
+}

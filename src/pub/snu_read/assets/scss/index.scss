@@ -1,0 +1,38 @@
+// common
+@forward "common/fonts";
+@forward "common/variables";
+@forward "common/functions";
+@forward "common/mixins";
+@forward "common/animation";
+@forward "common/base";
+
+// fontawesome
+@forward "fontawesome/fontawesome";
+@forward "fontawesome/solid";
+@forward "fontawesome/light";
+@forward "fontawesome/regular";
+/* @forward "fontawesome/brands";
+@forward "fontawesome/thin";
+@forward "fontawesome/duotone";
+@forward "fontawesome/sharp-light";
+@forward "fontawesome/sharp-regular";
+@forward "fontawesome/sharp-solid"; */
+
+// components
+@forward "components/buttons";
+@forward "components/form";
+@forward "components/table";
+@forward "components/video";
+@forward "components/loader";
+@forward "components/popup";
+@forward "components/bottomSheet";
+@forward "components/customAlert";
+
+// layout
+@forward "layout/header";
+@forward "layout/bottomNavBar";
+@forward "layout/sidebar";
+@forward "layout/contents";
+
+// pages
+@forward "pages/practice";

@@ -1,0 +1,40 @@
+@use "../common/mixins";
+
+.loader-wrap {
+	@include mixins.flex;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+
+	&.showbackground {
+		background-color: rgba(255, 255, 255, 0.5);
+	}
+}
+
+.loader {
+	margin: 3rem 0;
+	text-align: center;
+
+	&::before {
+		content: "";
+		display: inline-block;
+		width: 3rem;
+		height: 3rem;
+		border-radius: 50%;
+		/* border: 0.3rem solid transparent;
+		border-left-color: var(--primary-color);
+		border-top-color: var(--primary-color);
+		border-right-color: var(--primary-color); */
+		animation: spin 1s infinite linear;
+		vertical-align: top;
+		background:
+			radial-gradient(farthest-side, var(--loader-color) 94%, rgba(0, 0, 0, 0)) top/0.4rem 0.4rem no-repeat,
+			conic-gradient(rgba(0, 0, 0, 0) 30%, var(--loader-color));
+		mask: radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 0.4rem), #000 0);
+		-webkit-mask: radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 0.4rem), #000 0);
+	}
+}

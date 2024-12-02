@@ -1,0 +1,315 @@
+@use "functions";
+@use "mixins";
+
+/* variables */
+:root {
+	// size
+	--base-screen-width: 375;
+	--container-padding: 2rem;
+	--contents-head-height: 5.2rem;
+
+	// base text
+	--base-text-color: #333;
+	--base-text-family: "IBM Plex Sans KR", sans-serif;
+	--base-text-size: 1.4rem;
+	--base-line-height: 1.6;
+
+	--secondary-text-family: "HappinessSans", sans-serif;
+
+	// common color
+	--primary-color: var(--green-01);
+	--secondary-color: #498bdd;
+	--point-color: var(--primary-color);
+	--red-color: #cf4b4b;
+	--deep-green-01: #468F74;
+	--green-01: #5FB03F;
+	--green-02: #5EA77D;
+	--gray-01: #ADADAD;
+
+	// text color
+	--dark-text-color: #080808;
+
+	// line color
+	--line-gray-01: #e6e6e6;
+
+	// bg color
+	--bg-green: #F2FAEE;
+
+	// component color
+	--accent-color: var(--primary-color);
+	--selection-bg-color: rgba(0, 0, 0, 0.8);
+	--selection-text-color: #fff;
+	--placeholder-text-color: #999;
+	--loader-color: var(--primary-color);
+
+	// radius
+	--box-border-radius: 0.3rem;
+	--form-border-radius: 0.3rem;
+}
+
+* {
+	/* 버튼 음영 제거 */
+	-webkit-tap-highlight-color: transparent;
+	/* 텍스트만 드래그 가능 */
+	user-select: text;
+	/* 링크 long touch 제거 */
+	-webkit-touch-callout: none;
+}
+
+*,
+::before,
+::after {
+	box-sizing: border-box;
+	outline: none !important;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+	font-size: calc(10 * 100vw / var(--base-screen-width));
+
+	@include mixins.mq(custom, functions.em(520)) {
+		font-size: calc(10 * 100vw / 520);
+	}
+
+	@include mixins.mq(tablet) {
+		font-size: 1.302083333333333vw;
+	}
+
+	@include mixins.mq(pc) {
+		font-size: 0.9765625vw;
+	}
+
+	@include mixins.mq(custom, functions.em(1440)) {
+		font-size: 0.69444vw;
+	}
+}
+
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+button,
+select {
+	margin: 0;
+	padding: 0;
+}
+
+body,
+input,
+textarea,
+select,
+button,
+table {
+	color: var(--base-text-color);
+	font-family: var(--base-text-family);
+	font-size: var(--base-text-size);
+	line-height: var(--base-line-height);
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: keep-all;
+	line-break: normal;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	line-height: inherit;
+}
+
+img,
+fieldset {
+	border: 0;
+}
+
+img {
+	max-width: 100%;
+	vertical-align: top;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+i,
+address {
+	font-style: normal;
+}
+
+/* i {
+	display: inline-block;
+	vertical-align: top;
+} */
+
+a {
+	color: inherit;
+	background-color: transparent;
+	-webkit-text-decoration-skip: objects;
+	text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:focus {
+	text-decoration: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+iframe {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+input::-webkit-input-placeholder {
+	line-height: normal !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="submit"],
+input[type="tel"],
+input[type="number"] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+input[type="checkbox"] {
+	box-shadow: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+	display: none;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+	accent-color: var(--accent-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+button,
+input {
+	border-radius: 0;
+}
+
+button {
+	padding: 0;
+	border: 0;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+a,
+[onclick],
+label,
+select {
+	cursor: pointer;
+}
+
+select {
+	background: #fff;
+}
+
+select::-ms-expand {
+	background: transparent;
+	border: 0;
+}
+
+textarea {
+	overflow: auto;
+	resize: none;
+}
+
+[hidden] {
+	display: none;
+}
+
+caption {
+	overflow: hidden;
+	width: 0.1rem;
+	height: 0.1rem;
+	margin-top: -0.1rem;
+}
+
+.blind,
+legend {
+	@include mixins.hide;
+}
+
+.hidden-scroll {
+	overflow: hidden;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+::selection {
+	background: var(--selection-bg-color);
+	color: var(--selection-text-color);
+}
+
+::placeholder {
+	color: var(--placeholder-text-color);
+}
+
+#app {
+	@include mixins.flex(normal, normal, column);
+
+	position: relative;
+	min-height: 100vh;
+	min-height: 100dvh;
+}

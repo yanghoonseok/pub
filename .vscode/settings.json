@@ -1,0 +1,15 @@
+{
+  "material-icon-theme.activeIconPack": "vue",
+  "material-icon-theme.folders.associations": {
+    "main": "Mobile",
+    "main/**": "Mobile",
+    "pub": "Theme"
+  },
+  "material-icon-theme.files.associations": {
+    ".env.product": "Tune"
+  },
+  "html.format.wrapLineLength": 0,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "px-to-rem.px-per-rem": 10
+}

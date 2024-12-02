@@ -1,0 +1,10 @@
+@use "sass:math";
+
+// px -> em 변환
+@function em($px) {
+	@if math.is-unitless($px) {
+		@return math.div($px, 16)+ em;
+	} @else {
+		@error "단위는 붙이지 말아주세요!"
+	}
+}

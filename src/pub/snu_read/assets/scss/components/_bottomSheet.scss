@@ -1,0 +1,68 @@
+.bottom-sheet {
+	overflow: hidden;
+	height: 0;
+
+	&.on {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 500;
+		height: auto;
+
+		.sheet-wrap {
+			transform: translateY(0);
+			transition: all 0.4s;
+		}
+	}
+
+	.sheet-wrap {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 20;
+		background: #fff;
+		padding: 3.5rem 2rem 2rem;
+		transform: translateY(100%);
+		border-radius: 2rem 2rem 0 0;
+	}
+
+	.sheet-bar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 22;
+		padding: 1.5rem 0;
+		text-align: center;
+		font-size: 0;
+
+		.bar {
+			display: block;
+			width: 6rem;
+			height: 0.3rem;
+			margin: 0 auto;
+			background: #a3a3a3;
+			border-radius: 0.2rem;
+		}
+	}
+
+	.sheet-close {
+		position: absolute;
+		top: 1rem;
+		right: 2rem;
+		font-size: 1.6rem;
+	}
+
+	.sheet-bg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10;
+		background: rgba(0, 0, 0, 0.4);
+	}
+}
